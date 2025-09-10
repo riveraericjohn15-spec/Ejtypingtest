@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Personal Typing Test</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <iframe class="background-iframe" src="background.html"></iframe>
+  
+<!-- Welcome Overlay -->
+<div id="welcome-overlay">
+<iframe class="background-iframe" src="background.html"></iframe>
+  <div class="welcome-content">
+    <h2>Welcome to Typing test</h2>
+    <div class="ring-wrap">
+      <div class="neon-circle outer-circle"></div>
+      <div class="neon-circle inner-circle"></div>
+      <div class="key-ring" id="welcome-key-ring"></div>
+      <div class="center-badge">
+        <button id="start-btn">Start</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="difficulty-time-container">
+  <div>
+    <label for="difficulty">Difficulty:</label>
+    <select id="difficulty">
+      <option value="easy">Easy</option>
+      <option value="medium">Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="duration">Time:</label>
+    <select id="duration">
+      <option value="30">30s</option>
+      <option value="60" selected>60s</option>
+      <option value="120">2min</option>
+    </select>
+  </div>
+
+ <div>
+    <button id="view-analytics-btn-top">Top 3 rankings</button>
+  </div>
+</div>
+
+
+  
+  
+  <div class="container">
+<h1 class="keyboard-title">
+  <span>T</span>
+  <span>y</span>
+  <span>p</span>
+  <span>i</span>
+  <span>n</span>
+  <span>g</span>
+  <span> </span>
+  <span>T</span>
+  <span>e</span>
+  <span>s</span>
+  <span>t</span>
+</h1>
+
+
+    <div id="test-text-container">
+      <p id="test-text"></p>
+    </div>
+
+    <div id="metrics">
+      <span>WPM: <span id="wpm">0</span></span>
+      <span>Accuracy: <span id="accuracy">100</span>%</span>
+      <span>Time: <span id="timer">0</span>s</span>
+    </div>
+
+    <textarea id="input-area" placeholder="Start typing here..." autofocus></textarea>
+
+    <!-- Show/Hide Button for the Keyboard -->
+    <input type="checkbox" id="keyboard-toggle" class="keyboard-toggle" />
+    <label for="keyboard-toggle" id="toggle-keyboard">Show/Hide Keys</label>
+
+    <!-- Keyboard Container -->
+    <div id="keyboard"></div>
+
+    <!-- Result Modal -->
+    <div id="result-modal" class="modal">
+      <div class="modal-content" id="modal-text"></div>
+    </div>
+	
+	<!-- Analytics Modal -->
+<div id="analytics-modal" class="modal">
+  <div class="modal-content">
+    <h2>Typing Analytics</h2>
+
+    <!-- Ranking Chart -->
+    <div class="ranking-chart">
+      <h3>Top 3 + Current</h3>
+      <div id="ranking-bars"></div>
+    </div>
+
+    <!-- Performance Bars -->
+    <div class="bar-graph">
+      <h3>Performance Details</h3>
+      <div class="bar-container">
+        <div class="bar neon-bar" id="wpm-bar"></div>
+        <div class="bar neon-bar" id="accuracy-bar"></div>
+      </div>
+      <div class="categories">
+        <span id="speed-category">Category: -</span>
+      </div>
+    </div>
+
+    <button id="analytics-close-btn">Close</button>
+  </div>
+</div>
+
+
+      
+<footer>
+  <p>
+    © 2025 Developed by 
+    <a href="https://github.com/riveraericjohn15-spec" target="_blank" rel="noopener noreferrer" class="dev-name">
+      riveraericjohn15-spec
+    </a> 
+    <span class="version" id="version1" title="This is version 1, and there are more updates and features planned to make this website even better in the future.!">v1</span>
+  </p>
+</footer>
+
+<script>
+  // Select the v1 element
+  const versionElement = document.getElementById('version1');
+
+  // Add click event to show alert
+  versionElement.addEventListener('click', () => {
+    alert('This is version 1, and there are more updates and features planned to make this website even better in the future.');
+  });
+</script>
+
+	
+
+  <script src="script.js"></script>
+</body>
+</html>
