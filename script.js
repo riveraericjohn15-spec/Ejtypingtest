@@ -1,124 +1,109 @@
-const wordDisplay = document.getElementById('word-display');
-const inputField = document.getElementById('input-field');
-const wpmTag = document.getElementById('wpm');
-const highScoreTag = document.getElementById('high-score');
-const accuracyTag = document.getElementById('accuracy');
-const timerTag = document.getElementById('timer');
-const focusOverlay = document.getElementById('focus-overlay');
-const resetBtn = document.getElementById('reset-btn');
-
-let timer, maxTime = 60, timeLeft = maxTime;
-let charIndex = 0, mistakes = 0, isTyping = false;
-
-// Initialize High Score from LocalStorage
-let highScore = localStorage.getItem('ej-best-wpm') || 0;
-highScoreTag.innerText = highScore;
-
-const textPool = [
-    "The advance of technology is based on making it fit in so that you don't even notice it.",
-    "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-    "Code is like humor. When you have to explain it, it's bad.",
-    "The quick brown fox jumps over the lazy dog to test the mechanical keyboard keys."
-];
-
-function loadText() {
-    const randomText = textPool[Math.floor(Math.random() * textPool.length)];
-    wordDisplay.innerHTML = "";
-    randomText.split("").forEach(char => {
-        let span = `<span>${char}</span>`;
-        wordDisplay.innerHTML += span;
-    });
-    wordDisplay.querySelectorAll('span')[0].classList.add('active');
+:root {
+    --blood-red: #8b0000;
+    --neon-red: #ff0000;
+    --dark-bg: #050505;
+    --glass: rgba(20, 20, 20, 0.8);
 }
 
-function initTyping() {
-    const characters = wordDisplay.querySelectorAll('span');
-    let typedChar = inputField.value.split("")[charIndex];
-
-    if (charIndex < characters.length && timeLeft > 0) {
-        if (!isTyping) {
-            timer = setInterval(startTimer, 1000);
-            isTyping = true;
-        }
-
-        if (typedChar == null) { // Handle Backspace
-            if (charIndex > 0) {
-                charIndex--;
-                if (characters[charIndex].classList.contains('incorrect')) mistakes--;
-                characters[charIndex].classList.remove('correct', 'incorrect');
-            }
-        } else {
-            if (characters[charIndex].innerText === typedChar) {
-                characters[charIndex].classList.add('correct');
-            } else {
-                mistakes++;
-                characters[charIndex].classList.add('incorrect');
-            }
-            charIndex++;
-        }
-
-        characters.forEach(span => span.classList.remove('active'));
-        if (charIndex < characters.length) characters[charIndex].classList.add('active');
-
-        // Accuracy Calculation
-        let acc = Math.round(((charIndex - mistakes) / charIndex) * 100);
-        accuracyTag.innerText = acc < 0 || !acc ? 0 : acc;
-
-        // Standard WPM Formula: (Correct Chars / 5) / (Time Spent in Minutes)
-        let timeSpent = (maxTime - timeLeft) / 60; 
-        let wpm = Math.round(((charIndex - mistakes) / 5) / timeSpent);
-        wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
-        wpmTag.innerText = wpm;
-
-        // Check for new High Score
-        if (wpm > highScore) {
-            highScore = wpm;
-            highScoreTag.innerText = highScore;
-            localStorage.setItem('ej-best-wpm', highScore);
-        }
-    } else {
-        clearInterval(timer);
-        inputField.value = "";
-    }
+body {
+    background: var(--dark-bg);
+    color: #cccccc;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
-function startTimer() {
-    if (timeLeft > 0) {
-        timeLeft--;
-        timerTag.innerText = timeLeft;
-    } else {
-        clearInterval(timer);
-    }
+.glass-container {
+    background: var(--glass);
+    border: 2px solid var(--blood-red);
+    padding: 2.5rem;
+    border-radius: 15px;
+    width: 85%;
+    max-width: 850px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
 }
 
-function resetGame() {
-    clearInterval(timer);
-    timeLeft = maxTime;
-    charIndex = mistakes = 0;
-    isTyping = false;
-    inputField.value = "";
-    timerTag.innerText = timeLeft;
-    wpmTag.innerText = 0;
-    accuracyTag.innerText = 100;
-    loadText();
+.site-logo {
+    width: 60px;
+    height: 60px;
+    filter: drop-shadow(0 0 5px var(--neon-red));
+    animation: pulse 3s infinite;
 }
 
-// Event Listeners
-inputField.addEventListener('input', initTyping);
-resetBtn.addEventListener('click', resetGame);
-inputField.addEventListener('paste', e => e.preventDefault());
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 15px var(--neon-red)); }
+    100% { transform: scale(1); opacity: 0.8; }
+}
 
-// Focus Guard logic
-window.addEventListener('blur', () => focusOverlay.classList.remove('hidden'));
-focusOverlay.addEventListener('click', () => {
-    focusOverlay.classList.add('hidden');
-    inputField.focus();
-});
+.horror-title {
+    color: var(--blood-red);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-top: 10px;
+}
 
-// Capture global clicks to keep input focused
-document.addEventListener('click', () => inputField.focus());
-document.addEventListener('keydown', (e) => {
-    if(e.key === "Tab") e.preventDefault(); // Don't let tab leave the page
-});
+.stats-bar {
+    display: flex;
+    justify-content: space-around;
+    margin: 25px 0;
+    font-size: 1.3rem;
+    color: var(--neon-red);
+}
 
-loadText();
+.word-display {
+    font-size: 1.5rem;
+    line-height: 2.2rem;
+    margin-bottom: 25px;
+    text-align: left;
+    min-height: 100px;
+}
+
+.word-display span { color: #444; }
+.word-display span.correct { color: #eee; }
+.word-display span.incorrect { color: var(--neon-red); text-decoration: underline; }
+.word-display span.active { border-bottom: 3px solid var(--neon-red); }
+
+.input-field { opacity: 0; position: absolute; }
+
+#reset-btn {
+    background: transparent;
+    border: 2px solid var(--blood-red);
+    color: var(--blood-red);
+    padding: 10px 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#reset-btn:hover {
+    background: var(--blood-red);
+    color: white;
+    box-shadow: 0 0 15px var(--blood-red);
+}
+
+.header-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    margin-bottom: 15px;
+}
+
+.github-link { color: var(--blood-red); text-decoration: none; }
+
+#focus-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95);
+    color: var(--blood-red);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.hidden { display: none !important; }
