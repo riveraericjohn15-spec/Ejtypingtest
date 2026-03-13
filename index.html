@@ -3,22 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EJ Typing Test v2.1</title>
+    <title>EJ Typing Test - Horror Edition</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="glass-container">
         <div class="header-meta">
-            <span class="version-tag">v2.1.0</span>
+            <span class="version-tag">v2.1.0-horror</span>
             <a href="https://github.com/riveraericjohn15-spec" target="_blank" class="github-link">@riveraericjohn15-spec</a>
         </div>
 
-        <h1>EJ Typing Test</h1>
+        <div class="logo-box">
+            <img src="favicon.svg" alt="Logo" class="site-logo">
+        </div>
+        
+        <h1 class="horror-title">EJ Typing Test</h1>
         
         <div class="stats-bar">
             <div class="stat">WPM: <span id="wpm">0</span></div>
             <div class="stat">Best: <span id="high-score">0</span></div>
-            <div class="stat">Accuracy: <span id="accuracy">100</span>%</div>
+            <div class="stat">Acc: <span id="accuracy">100</span>%</div>
             <div class="stat">Time: <span id="timer">60</span>s</div>
         </div>
 
@@ -27,13 +31,13 @@
         <input type="text" id="input-field" class="input-field" autofocus autocomplete="off">
         
         <div class="controls">
-            <button id="reset-btn">Restart Game</button>
-            <p class="hint">Tip: Press <b>Tab + Enter</b> to quickly restart</p>
+            <button id="reset-btn">RESTART</button>
+            <p class="hint">Press <b>Tab + Enter</b> to try again</p>
         </div>
     </div>
 
     <div id="focus-overlay" class="hidden">
-        <p>Paused. Click to Resume Typing.</p>
+        <p>PAUSED. CLICK TO RESUME.</p>
     </div>
 
     <script src="script.js"></script>
